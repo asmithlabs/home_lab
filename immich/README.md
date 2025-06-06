@@ -157,6 +157,39 @@ https://asmithlabs.com
 ```
 
 ---
+---
+
+## 🔁 Snapshot & Backup Strategy
+
+Immich datasets are backed up using **TrueNAS ZFS snapshots** and replication to an external 8TB USB pool (`MyBookPool`).
+
+### 📂 Source Dataset
+```
+/mnt/samsungssdpool/immich
+```
+
+### 💾 Destination Pool
+```
+/mnt/MyBookPool/immich
+```
+
+### 🔧 Snapshot + Replication Setup
+
+- **Method**: TrueNAS Replication Task Wizard
+- **Type**: Push replication from main pool → MyBookPool
+- **Schedule**: Daily at 2 AM
+- **Retention**: Last 7 snapshots
+- **Recursive**: Enabled (includes photos, db, config if nested)
+
+### 🧪 Recovery Workflow
+
+To recover from backup:
+1. Clone latest snapshot from `/mnt/MyBookPool/immich`
+2. Replace or remount as live dataset
+3. Restart Immich app if needed
+
+---
+
 
 ## 📄 License
 
